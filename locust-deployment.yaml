@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust-deployment
+  labels:
+    app: locust
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: locust
+  template:
+    metadata:
+      labels:
+        app: locust
+    spec:
+      containers:
+      - name: locust
+        args: ["-f", "/test/test.py", "--host=http://example.com"]
+        image: mattmatch/docker-locust:latest
+        ports:
+        - containerPort: 8089
+        - containerPort: 5557
+        - containerPort: 5558
+        volumeMounts:
+        - name: config-volume
+          mountPath: /test
+      volumes:
+      - name: config-volume
+        configMap:
+          name: locust-config
