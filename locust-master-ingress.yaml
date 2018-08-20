@@ -11,5 +11,5 @@ spec:
   - http:
       paths:
       - backend:
-          serviceName: locust-deployment
+          serviceName: locust-master-deployment
           servicePort: 8089

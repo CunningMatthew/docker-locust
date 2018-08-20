@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: locust-deployment
+  name: locust-worker-deployment
   labels:
     app: locust
 spec:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: locust
-        args: ["-f", "/test/test.py", "--host=http://example.com"]
+        args: ["-f", "/test/test.py", "--slave", "--master-host=locust-master-deployment"]
         image: mattmatch/docker-locust:latest
         ports:
         - containerPort: 8089
