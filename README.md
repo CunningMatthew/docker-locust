@@ -12,8 +12,6 @@ kubectl expose deployment locust-master-deployment --type=LoadBalancer
 
 kubectl create -f locust-worker-deployment.yaml
 
-kubectl expose deployment locust-worker-deployment --type=NodePort
-
 # Reloading Configuration
 
 kubectl scale deployment locust-master-deployment --replicas=0
