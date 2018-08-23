@@ -4,14 +4,17 @@ metadata:
   name: locust-master-deployment
   labels:
     app: locust
+    identifier: master
 spec:
   selector:
     matchLabels:
       app: locust
+      identifier: master
   template:
     metadata:
       labels:
         app: locust
+        identifier: master
     spec:
       containers:
       - name: locust

@@ -8,13 +8,21 @@ kubectl create configmap locust-config --from-file=locust_test/
 
 kubectl create -f locust-master-deployment.yaml
 
-kubectl expose deployment locust-master-deployment --type=NodePort
+kubectl expose deployment locust-master-deployment --type=LoadBalancer
 
 kubectl create -f locust-worker-deployment.yaml
 
 kubectl expose deployment locust-worker-deployment --type=NodePort
 
-kubectl create -f locust-master-ingress.yaml
+# Reloading Configuration
+
+kubectl scale deployment locust-master-deployment --replicas=0
+
+kubectl scale deployment locust-worker-deployment --replicas=0
+
+kubectl scale deployment locust-master-deployment --replicas=1
+
+kubectl scale deployment locust-worker-deployment --replicas=6
 
 # Configuring minikube to run locally
 
@@ -29,3 +37,5 @@ Enabled ingress on the minikube instance by using the command `minikube addons e
 # Notes from the field
 
 These quantities of requests can cause unprepared kubernetes environments (my minikube, for example) to completely stop responding to requests as all networking infrastructure can be consumed.
+
+I tried using an ingress instance originally, but I get much better graphs and reporting out of a direct loadbalancer.
